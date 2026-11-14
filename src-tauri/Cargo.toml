@@ -1,0 +1,26 @@
+[package]
+name = "delta-explorer"
+description = "Delta Explorer"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "delta_explorer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+percent-encoding = "2"
+de-core = { path = "../crates/de-core" }
+de-shell = { path = "../crates/de-shell" }
+de-remote = { path = "../crates/de-remote" }
+drag = "2.1.1"
+notify = "8"
+serde_json = "1"
+tauri-plugin-single-instance = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-autostart = "2"

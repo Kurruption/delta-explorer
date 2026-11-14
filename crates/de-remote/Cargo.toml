@@ -1,0 +1,27 @@
+[package]
+name = "de-remote"
+version.workspace = true
+edition.workspace = true
+
+# Remote locations (SFTP, FTP/FTPS, WebDAV) behind one blocking RemoteProvider trait.
+# All TLS/crypto uses ring (pure Rust + asm, builds with MSVC; no cmake/NASM like aws-lc-sys, no OpenSSL).
+[dependencies]
+de-core = { path = "../de-core" }
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["rt-multi-thread", "time", "net"] }
+russh = { version = "0.65", default-features = false, features = ["ring", "rsa", "flate2"] }
+russh-sftp = "3"
+suppaftp = { version = "12", features = ["rustls-ring"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+rustls-platform-verifier = "0.7"
+reqwest = { version = "0.13", default-features = false, features = ["blocking", "rustls-no-provider"] }
+roxmltree = "0.21" # WebDAV PROPFIND replies
+httpdate = "1"
+keyring = "4"
+percent-encoding = "2"
+
+# A real in-process WebDAV server, so the WebDAV client is tested end to end.
+[dev-dependencies]
+dav-server = { version = "0.12", default-features = false, features = ["memfs"] }
+hyper = { version = "1", features = ["server", "http1"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
